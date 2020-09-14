@@ -1,0 +1,21 @@
+{
+	"default": {
+		"query": "button[title=\"Add to Cart\"",
+		"interval": 30000,
+		"options": {}
+	},
+	"sites": [
+		{
+			"url": "https://www.roguefitness.com/rogue-monster-bands"
+		},
+		{
+			"url": "https://www.roguefitness.com/rogue-infinity-matador"
+		},
+		{
+			"url": "https://www.repfitness.com/bars-plates/storage/bar-and-bumper-plate-tree"
+		},
+		{
+			"url": "https://www.repfitness.com/strength-equipment/strength-training/benches/rep-ab-5200-spotter-platform"
+		}
+	]
+}
