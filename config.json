@@ -11,7 +11,7 @@
 	},
 	"sites": [
 		{
-			"url": "https://www.roguefitness.com/rogue-monster-bands"
+			"url": "https://www.roguefitness.com/rogue-lb-change-plates"
 		},
 		{
 			"url": "https://www.roguefitness.com/rogue-infinity-matador"
@@ -20,7 +20,29 @@
 			"url": "https://www.repfitness.com/bars-plates/storage/bar-and-bumper-plate-tree"
 		},
 		{
-			"url": "https://www.repfitness.com/strength-equipment/strength-training/benches/rep-ab-5200-spotter-platform"
+			"url": "https://www.repfitness.com/strength-equipment/strength-training/benches/rep-ab-5000"
+		},
+		{
+			"url": "https://www.repfitness.com/bars-plates/olympic-plates/fractional-plates/rep-lb-change-plates"
+		},
+		{
+			"url": "https://www.repfitness.com/bars-plates/bar-and-plate-packages/rep-weight-set-color-bumpers"
+		},
+		{
+			"url": "https://www.repfitness.com/bars-plates/olympic-plates/bumper-plates/rep-competition-bumper-plates-lb"
+		},
+		{
+			"url": "https://www.roguefitness.com/rogue-rubber-hex-dumbbell-sets"
+		},
+		{
+			"url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-rubber-hex-dumbbell-sets"
+		},
+		{
+			"url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-dumbbell-rack",
+			"interval": 1000
+		},
+		{
+			"url": "https://www.roguefitness.com/rogue-color-lb-training-2-0-plates"
 		}
 	]
 }
