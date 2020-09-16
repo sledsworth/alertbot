@@ -1,4 +1,9 @@
 {
+	"notifications": {
+		"from": "\"Parserbot 🤖\" <parser@empatheticbot.com>",
+		"to": "sledsworth@gmail.com",
+		"subject": "Parserbot Found a Thing!"
+	},
 	"default": {
 		"query": "button[title=\"Add to Cart\"",
 		"interval": 30000,

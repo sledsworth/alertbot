@@ -1,15 +1,54 @@
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-const config = require('./config.json')
+require('dotenv').config();
 
-async function fetchPage(url, options = {}) {
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
+
+const config = require('./config.json');
+
+async function fetchPage(url, query = config.default.query, options = config.options) {
 	const dom = await JSDOM.fromURL(url, options);
-	console.log(dom.window.document.body.querySelector('button[title="Add to Cart"]'), `-> ${url}`);
-	return dom;
+	const element = dom.window.document.body.querySelector(query);
+	console.log(element);
+	if (element) {
+		console.log(`${url}: ${element.toString()} found!`);
+		notifyOfFind({
+			text: `${url}: ${element.toString()} found!`,
+		});
+		return true;
+	}
+	return false;
 }
 
-config.sites.forEach((site) => {
+async function notifyOfFind(details) {
+	// create reusable transporter object using the default SMTP transport
+	let transporter = nodemailer.createTransport({
+		host: process.env.EMAIL_HOST,
+		port: 587,
+		secure: false, // true for 465, false for other ports
+		auth: {
+			user: process.env.EMAIL_ADDRESS, // generated ethereal user
+			pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+		},
+	});
+
+	// send mail with defined transport object
+	let info = await transporter.sendMail({
+		from: config.notifications.from, // sender address
+		to: config.notifications.to, // list of receivers
+		subject: details.subject || config.notifications.subject, // Subject line
+		text: details.text, // plain text body
+		html: details.html, // html body
+	});
+
+	console.log('Message sent: %s', info.messageId);
+	// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+	// Preview only available when sending through an Ethereal account
+	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+}
+
+config.sites.forEach(site => {
 	setInterval(() => {
-		fetchPage(site.url, site.options || config.options);
+		fetchPage(site.url, site.query, site.options);
 	}, site.interval || config.default.interval);
 });
