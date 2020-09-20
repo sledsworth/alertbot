@@ -6,7 +6,9 @@
 	},
 	"default": {
 		"query": "button[title=\"Add to Cart\"]",
+		"inclusiveQuery": true,
 		"interval": 30000,
+		"intervalAfterEmail": 28800000,
 		"options": {}
 	},
 	"sites": [
@@ -39,7 +41,7 @@
 		},
 		{
 			"url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-dumbbell-rack",
-			"interval": 84600000
+			"interval": 28800000
 		},
 		{
 			"url": "https://www.roguefitness.com/rogue-color-lb-training-2-0-plates"
@@ -58,11 +60,16 @@
 		{
 			"url": "https://www.ikea.com/us/en/p/duvholmen-inner-back-cushion-outdoor-white-off-white-00391838/",
 			"query": ".js-stockcheck-section span.range-revamp-stockcheck__status--success",
-			"interval": 84600000
+			"interval": 28800000
 		},
 		{
 			"url": "https://www.ikea.com/us/en/p/aepplaroe-reclining-chair-outdoor-brown-foldable-brown-stained-brown-70208539/",
 			"query": ".js-stockcheck-section span.range-revamp-stockcheck__status--success"
+		},
+		{
+			"url": "https://www.microsoft.com/en-us/p/xbox-series-x/8wj714n3rbtl",
+			"query": "button[aria-label=\"Coming Soon.\"][disabled]",
+			"inclusiveQuery": false
 		}
 	]
 }

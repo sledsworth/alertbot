@@ -1,28 +1,36 @@
 require('dotenv').config();
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
-
 const config = require('./config.json');
 
-async function fetchPage(url, query = config.default.query, options = config.options) {
-	const dom = await JSDOM.fromURL(url, options);
-	const element = dom.window.document.body.querySelector(query);
-	if (element) {
+let intervals = {};
+
+async function fetchPage(site) {
+	let dom;
+	try {
+		dom = await JSDOM.fromURL(site.url, site.options || config.default.options);
+	} catch (e) {
+		console.log(e);
+		return;
+	}
+	const element = dom.window.document.body.querySelector(site.query || config.default.query);
+	const evaluatedFind = site.inclusiveQuery ? !!element : element;
+	if (evaluatedFind) {
 		notifyOfFind({
-			text: 
-			`
+			text: `
 ${dom.window.document.title}
 
-${url}
+${site.url}
 
 
 ${element.outerHTML} found!
 			`,
 		});
-		return true;
+		console.log(site.intervalAfterEmail || config.default.intervalAfterEmail);
+		setPageCheckInterval(site, site.intervalAfterEmail || config.default.intervalAfterEmail);
 	}
-	return false;
+	return evaluatedFind;
 }
 
 async function notifyOfFind(details) {
@@ -36,7 +44,7 @@ async function notifyOfFind(details) {
 			pass: process.env.EMAIL_PASSWORD, // generated ethereal password
 		},
 	});
-	
+
 	let info;
 	try {
 		// send mail with defined transport object
@@ -47,7 +55,7 @@ async function notifyOfFind(details) {
 			text: details.text, // plain text body
 			html: details.html, // html body
 		});
-	} catch(e) {
+	} catch (e) {
 		console.log(e);
 		return;
 	}
@@ -59,8 +67,17 @@ async function notifyOfFind(details) {
 	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 }
 
+function setPageCheckInterval(site, interval = site.interval || config.default.interval) {
+	const intervalTimer = setInterval(() => {
+		fetchPage(site);
+	}, interval);
+	if (intervals[site.url]) {
+		console.log(intervals[site.url]);
+		clearInterval(intervals[site.url]);
+	}
+	intervals[site.url] = intervalTimer;
+}
+
 config.sites.forEach(site => {
-	setInterval(() => {
-		fetchPage(site.url, site.query, site.options);
-	}, site.interval || config.default.interval);
+	setPageCheckInterval(site);
 });
