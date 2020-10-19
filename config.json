@@ -67,18 +67,9 @@
       "query": ".js-stockcheck-section span.range-revamp-stockcheck__status--success"
     },
     {
-      "url": "https://www.microsoft.com/en-us/p/xbox-series-x/8wj714n3rbtl",
-      "query": "button[aria-label=\"Coming Soon.\"][disabled]",
-      "inclusiveQuery": false
-    },
-    {
       "url": "https://www.amazon.com/PlayStation-5-Digital/dp/B08FC6MR62",
       "query": "#backInStock",
       "inclusiveQuery": false
-    },
-    {
-      "url": "https://shop.kingarthurbaking.com/items/apple-pie-spice-15-oz",
-      "query": "#add-to-cart-button"
     }
   ]
 }

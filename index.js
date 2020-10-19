@@ -11,7 +11,7 @@ async function fetchPage(site) {
 	try {
 		dom = await JSDOM.fromURL(site.url, site.options || config.default.options);
 	} catch (e) {
-		console.log(e);
+		console.log('JSDOM.fromURL: ', e);
 		return;
 	}
 	const element = dom.window.document.body.querySelector(site.query || config.default.query);
@@ -56,7 +56,7 @@ async function notifyOfFind(details) {
 			html: details.html, // html body
 		});
 	} catch (e) {
-		console.log(e);
+		console.log('nodemailer: ', e);
 		return;
 	}
 
