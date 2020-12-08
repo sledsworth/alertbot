@@ -13,63 +13,42 @@
   },
   "sites": [
     {
-      "url": "https://www.roguefitness.com/rogue-lb-change-plates"
-    },
-    {
       "url": "https://www.roguefitness.com/rogue-infinity-matador"
     },
     {
-      "url": "https://www.repfitness.com/bars-plates/storage/bar-and-bumper-plate-tree"
+      "url": "https://www.repfitness.com/bars-plates/storage/bar-and-bumper-plate-tree",
+      "query": "div.stock.available span.in-stock"
     },
     {
-      "url": "https://www.repfitness.com/strength-equipment/strength-training/benches/rep-ab-5000"
-    },
-    {
-      "url": "https://www.repfitness.com/bars-plates/olympic-plates/fractional-plates/rep-lb-change-plates"
-    },
-    {
-      "url": "https://www.repfitness.com/bars-plates/bar-and-plate-packages/rep-weight-set-color-bumpers"
-    },
-    {
-      "url": "https://www.repfitness.com/bars-plates/olympic-plates/bumper-plates/rep-competition-bumper-plates-lb"
+      "url": "https://www.repfitness.com/strength-equipment/strength-training/benches/rep-ab-5000",
+      "query": "div.stock.available span.in-stock"
     },
     {
       "url": "https://www.roguefitness.com/rogue-rubber-hex-dumbbell-sets"
     },
     {
-      "url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-rubber-hex-dumbbell-sets"
+      "url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-rubber-hex-dumbbell-sets",
+      "query": "div.stock.available span.in-stock"
     },
     {
       "url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-dumbbell-rack",
-      "interval": 28800000
+      "query": "div.stock.available span.in-stock"
     },
     {
       "url": "https://www.roguefitness.com/rogue-color-lb-training-2-0-plates"
     },
     {
-      "url": "https://www.roguefitness.com/rogue-echo-bumper-plates-with-white-text"
-    },
-    {
-      "url": "https://www.ikea.com/us/en/p/seglaroe-svartoe-hanging-umbrella-with-base-tilting-beige-dark-gray-s49251803/",
-      "query": ".js-stockcheck-section span.range-revamp-stockcheck__status--success"
-    },
-    {
-      "url": "https://www.ikea.com/us/en/p/jaerpoen-cover-for-back-cushion-outdoor-white-60445292/",
-      "query": ".js-stockcheck-section span.range-revamp-stockcheck__status--success"
-    },
-    {
-      "url": "https://www.ikea.com/us/en/p/duvholmen-inner-back-cushion-outdoor-white-off-white-00391838/",
-      "query": ".js-stockcheck-section span.range-revamp-stockcheck__status--success",
-      "interval": 28800000
-    },
-    {
-      "url": "https://www.ikea.com/us/en/p/aepplaroe-reclining-chair-outdoor-brown-foldable-brown-stained-brown-70208539/",
-      "query": ".js-stockcheck-section span.range-revamp-stockcheck__status--success"
-    },
-    {
       "url": "https://www.amazon.com/PlayStation-5-Digital/dp/B08FC6MR62",
-      "query": "#backInStock",
-      "inclusiveQuery": false
+      "query": "#add-to-cart-button"
+    },
+    {
+      "url": "https://www.vionicshoes.com/jackie-slipper.html",
+      "query": ".add-to-cart button[disabled]",
+      "inclusiveQuery": false,
+      "options": {
+        "runScripts": "dangerously",
+        "resources": "usable"
+      }
     }
   ]
 }

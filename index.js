@@ -14,23 +14,27 @@ async function fetchPage(site) {
 		console.log('JSDOM.fromURL: ', e);
 		return;
 	}
-	const element = dom.window.document.body.querySelector(site.query || config.default.query);
-	const evaluatedFind = site.inclusiveQuery ? !!element : element;
-	if (evaluatedFind) {
-		notifyOfFind({
-			text: `
-${dom.window.document.title}
-
-${site.url}
-
-
-${element.outerHTML} found!
-			`,
-		});
-		console.log(site.intervalAfterEmail || config.default.intervalAfterEmail);
-		setPageCheckInterval(site, site.intervalAfterEmail || config.default.intervalAfterEmail);
-	}
-	return evaluatedFind;
+	setTimeout(() => {
+		const query = site.query || config.default.query;
+		const inclusive = site.inclusiveQuery || config.default.inclusiveQuery;
+		const element = dom.window.document.body.querySelector(query);
+		const evaluatedFind = inclusive ? !!element : !element;
+		console.log(dom.window.document.body, element, evaluatedFind);
+		if (evaluatedFind) {
+			notifyOfFind({
+				text: `
+	${dom.window.document.title}
+	
+	${site.url}
+	
+	
+	${element ? element.outerHTML : query} found!
+				`,
+			});
+			console.log(site.intervalAfterEmail || config.default.intervalAfterEmail);
+			setPageCheckInterval(site, site.intervalAfterEmail || config.default.intervalAfterEmail);
+		}
+	}, 10000);
 }
 
 async function notifyOfFind(details) {
@@ -76,6 +80,13 @@ function setPageCheckInterval(site, interval = site.interval || config.default.i
 		clearInterval(intervals[site.url]);
 	}
 	intervals[site.url] = intervalTimer;
+}
+
+if (!process.env.EMAIL_HOST
+	|| !process.env.EMAIL_PASSWORD
+	|| !process.env.EMAIL_ADDRESS) {
+	
+	throw new Error("Missing email credentials for notifying a find. Setup a .env file at the root with fields EMAIL_ADDRESS, EMAIL_PASSWORD, and EMAIL_HOST.");
 }
 
 config.sites.forEach(site => {
