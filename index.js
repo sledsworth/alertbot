@@ -16,7 +16,7 @@ async function fetchPage(site) {
 	}
 	setTimeout(() => {
 		const query = site.query || config.default.query;
-		const inclusive = site.inclusiveQuery || config.default.inclusiveQuery;
+		const inclusive = site.inclusiveQuery !== undefined ? site.inclusiveQuery : config.default.inclusiveQuery;
 		const element = dom.window.document.body.querySelector(query);
 		const evaluatedFind = inclusive ? !!element : !element;
 		console.log(dom.window.document.body, element, evaluatedFind);

@@ -24,17 +24,6 @@
       "query": "div.stock.available span.in-stock"
     },
     {
-      "url": "https://www.roguefitness.com/rogue-rubber-hex-dumbbell-sets"
-    },
-    {
-      "url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-rubber-hex-dumbbell-sets",
-      "query": "div.stock.available span.in-stock"
-    },
-    {
-      "url": "https://www.repfitness.com/conditioning/strength-equipment/dumbbells/rep-dumbbell-rack",
-      "query": "div.stock.available span.in-stock"
-    },
-    {
       "url": "https://www.roguefitness.com/rogue-color-lb-training-2-0-plates"
     },
     {
