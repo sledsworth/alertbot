@@ -29,15 +29,6 @@
     {
       "url": "https://www.amazon.com/PlayStation-5-Digital/dp/B08FC6MR62",
       "query": "#add-to-cart-button"
-    },
-    {
-      "url": "https://www.vionicshoes.com/jackie-slipper.html",
-      "query": ".add-to-cart button[disabled]",
-      "inclusiveQuery": false,
-      "options": {
-        "runScripts": "dangerously",
-        "resources": "usable"
-      }
     }
   ]
 }
