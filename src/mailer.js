@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const config = require("../config.json");
+const config = require("./items/config.json");
 const logger = require("./logger.js");
 
 /**

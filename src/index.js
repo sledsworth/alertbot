@@ -1,8 +1,9 @@
 require("dotenv").config();
+require("./items/config.js");
 const nodemailer = require("nodemailer");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const config = require("../config.json");
+const config = require("./items/config.json");
 const logger = require("./logger.js");
 const mailer = require("./mailer.js");
 
