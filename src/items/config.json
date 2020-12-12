@@ -8,7 +8,7 @@
     "query": "button[title=\"Add to Cart\"]",
     "inclusiveQuery": true,
     "interval": 30000,
-    "intervalAfterEmail": 28800000,
+    "intervalAfterFound": 28800000,
     "options": {}
   },
   "sites": [

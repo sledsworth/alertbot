@@ -4,7 +4,8 @@
   "description": "Parse web pages and send alerts when criteria is met.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "debug": "node --inspect src/index.js"
   },
   "repository": {
     "type": "git",

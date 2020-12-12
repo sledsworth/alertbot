@@ -1,0 +1,10 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "npm run debug"
+    }
+  },
+  "identifier" : "FBCF6DE3-5C12-450A-B408-9E55940F516E",
+  "openLogOnRun" : "start"
+}

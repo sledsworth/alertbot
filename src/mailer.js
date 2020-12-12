@@ -3,6 +3,16 @@ const nodemailer = require("nodemailer");
 const config = require("./items/config.json");
 const logger = require("./logger.js");
 
+if (
+  !process.env.EMAIL_HOST ||
+  !process.env.EMAIL_PASSWORD ||
+  !process.env.EMAIL_ADDRESS
+) {
+  throw new Error(
+    "Missing email credentials for notifying a find. Setup a .env file at the root with fields EMAIL_ADDRESS, EMAIL_PASSWORD, and EMAIL_HOST."
+  );
+}
+
 /**
  *
  * @param details { subject: string, html: string, text: string }

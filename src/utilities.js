@@ -4,7 +4,7 @@ function delay(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-function setIntervalFor(id, milliseconds, func) {
+function updateIntervalFor(id, milliseconds, func) {
   const currentSetInterval = trackedIntervals[id];
   if (currentSetInterval) {
     clearInterval(currentSetInterval);
@@ -14,5 +14,5 @@ function setIntervalFor(id, milliseconds, func) {
 
 module.exports = {
   delay,
-  setIntervalFor,
+  updateIntervalFor,
 };
