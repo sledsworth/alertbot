@@ -22,7 +22,9 @@ async function getQueryElementFromURL(query, url, options) {
   logger.silly(
     `Queried (${query}) page ${dom.window.document.title} (${url}) and found:  ${element}`
   );
-  return element;
+  const found = !!element;
+  dom.window.close();
+  return found;
 }
 
 async function hasMetCriteriaOfQueryAndInclusion(site, options) {
@@ -37,14 +39,18 @@ async function resetWatchForItemOnFind(site) {
   );
   logger.info(hasMetCriteria);
   if (hasMetCriteria) {
-    watchForItemOnSite(site.url, site.intervalAfterFound);
+    watchForItemOnSite(site, site.intervalAfterFound);
   }
 }
 
 function watchForItemOnSite(site, interval = site.interval) {
   updateIntervalFor(site.url, interval, () => {
+    const memory = process.memoryUsage();
+    logger.debug(memory.rss);
     resetWatchForItemOnFind(site, interval);
   });
+  const memory = process.memoryUsage();
+  logger.debug(memory.rss);
 }
 
 module.exports = {
