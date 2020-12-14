@@ -45,8 +45,6 @@ async function resetWatchForItemOnFind(site) {
 
 function watchForItemOnSite(site, interval = site.interval) {
   updateIntervalFor(site.url, interval, () => {
-    const memory = process.memoryUsage();
-    logger.debug(memory.rss);
     resetWatchForItemOnFind(site, interval);
   });
   const memory = process.memoryUsage();
