@@ -1,34 +1,14 @@
 {
-  "notifications": {
-    "from": "\"Parserbot 🤖\" <parser@empatheticbot.com>",
-    "to": "sledsworth@gmail.com",
-    "subject": "Parserbot Found a Thing!"
-  },
-  "default": {
+  "defaults": {
+    "notifications": {
+      "from": "\"Alertbot 🤖\" <parser@empatheticbot.com>",
+      "to": "sledsworth@gmail.com",
+      "subject": "Alertbot Found a Thing!"
+    },
     "query": "button[title=\"Add to Cart\"]",
     "inclusiveQuery": true,
     "interval": 30000,
     "intervalAfterFound": 28800000,
     "options": {}
-  },
-  "sites": [
-    {
-      "url": "https://www.roguefitness.com/rogue-infinity-matador"
-    },
-    {
-      "url": "https://www.repfitness.com/bars-plates/storage/bar-and-bumper-plate-tree",
-      "query": "div.stock.available span.in-stock"
-    },
-    {
-      "url": "https://www.repfitness.com/strength-equipment/strength-training/benches/rep-ab-5000",
-      "query": "div.stock.available span.in-stock"
-    },
-    {
-      "url": "https://www.roguefitness.com/rogue-color-lb-training-2-0-plates"
-    },
-    {
-      "url": "https://www.amazon.com/PlayStation-5-Digital/dp/B08FC6MR62",
-      "query": "#add-to-cart-button"
-    }
-  ]
+  }
 }

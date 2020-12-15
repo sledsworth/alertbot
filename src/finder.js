@@ -1,9 +1,10 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const logger = require("./logger.js");
+const mailer = require("./mailer.js");
 const { delay, updateIntervalFor } = require("./utilities");
 
-async function getQueryElementFromURL(query, url, options) {
+async function getDomFromURLWithOptions(url, options, delayFor = 10000) {
   let dom;
   try {
     dom = await JSDOM.fromURL(url, options);
@@ -11,34 +12,54 @@ async function getQueryElementFromURL(query, url, options) {
     logger.error(`JSDOM.fromURL failed with error: ${e}`);
     return;
   }
-  console.log("before delay");
   // Wait some time before attempting to query the page in case there
   // are additional scripts needed to run before site is completely rendered.
   // This is an arbitrary length of 10 seconds and doesn't guarantee the site is done loading.
-  await delay(10000);
-  console.log("after delay");
+  await delay(delayFor);
 
+  return dom;
+}
+
+async function getQueryElementFromURL(query, url, options) {
+  const dom = await getDomFromURLWithOptions(url, options);
+  if (!dom.window) {
+    logger.error(`DOM not found for ${url}`);
+  }
   const element = dom.window.document.body.querySelector(query);
   logger.silly(
     `Queried (${query}) page ${dom.window.document.title} (${url}) and found:  ${element}`
   );
-  const found = !!element;
-  dom.window.close();
-  return found;
+  return { dom, element };
 }
 
 async function hasMetCriteriaOfQueryAndInclusion(site, options) {
-  const element = await getQueryElementFromURL(site.query, site.url, options);
-  return site.inclusiveQuery ? !!element : !element;
+  const { element, dom } = await getQueryElementFromURL(
+    site.query,
+    site.url,
+    options
+  );
+  return { element, dom, found: site.inclusiveQuery ? !!element : !element };
 }
 
 async function resetWatchForItemOnFind(site) {
-  const hasMetCriteria = await hasMetCriteriaOfQueryAndInclusion(
+  const { found, dom, element } = await hasMetCriteriaOfQueryAndInclusion(
     site,
     site.options
   );
-  logger.info(hasMetCriteria);
-  if (hasMetCriteria) {
+  if (found) {
+    logger.info(`Found ${site.url}!`);
+    mailer.sendMail({
+      text: `
+        ${dom.window.document.title}
+    
+        ${site.url}
+    
+    
+        ${element ? element.outerHTML : query} found!
+      `,
+      notifications: site.notifications,
+    });
+
     watchForItemOnSite(site, site.intervalAfterFound);
   }
 }

@@ -29,6 +29,7 @@ const logConfiguration = {
     }),
     new winston.transports.File({
       filename: "./logs/exceptions.log",
+      level: "error",
       handleExceptions: true,
     }),
   ],

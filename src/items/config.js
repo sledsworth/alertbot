@@ -6,7 +6,29 @@ const items = [
   // Add your configs here...
 ];
 
-console.log(items);
-console.log(items[1].sites[0].url);
+const globalDefault = require("./config.json").defaults;
 
-module.exports = {};
+function getSiteWithDefaults(site, defaults) {
+  if (defaults) {
+    return Object.assign({}, globalDefault, defaults, site);
+  }
+  return Object.assign({}, globalDefault, site);
+}
+
+function getSites() {
+  return items.reduce((acc, config) => {
+    if (Array.isArray(config.sites)) {
+      return [
+        ...acc,
+        ...config.sites.map((site) => {
+          return getSiteWithDefaults(site, config.defaults);
+        }),
+      ];
+    }
+    return acc;
+  }, []);
+}
+
+module.exports = {
+  getSites,
+};

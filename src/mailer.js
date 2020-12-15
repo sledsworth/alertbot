@@ -32,9 +32,9 @@ async function sendMail(details) {
   try {
     // send mail with defined transport object
     info = await transporter.sendMail({
-      from: config.notifications.from, // sender address
-      to: config.notifications.to, // list of receivers
-      subject: details.subject || config.notifications.subject, // Subject line
+      from: details.notifications.from, // sender address
+      to: details.notifications.to, // list of receivers
+      subject: details.subject || details.notifications.subject, // Subject line
       text: details.text, // plain text body
       html: details.html, // html body
     });
