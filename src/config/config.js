@@ -35,6 +35,8 @@ function getSiteWithDefaults(site, defaults) {
 }
 
 /**
+ * Interprets configuration files and reduces them down to a flat array.
+ *
  * @return [site] - an array of site data
  **/
 function getSites() {

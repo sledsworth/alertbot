@@ -8,5 +8,6 @@
   "inclusiveQuery": true,
   "interval": 30000,
   "intervalAfterFound": 28800000,
+  "loadDelay": 10000,
   "options": {}
 }

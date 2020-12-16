@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-
 const logger = require("./logger.js");
 
 if (
@@ -13,9 +12,18 @@ if (
 }
 
 /**
+ * Send email given the details and notification information.
  *
- * @param details { subject: string, html: string, text: string }
- **/
+ * @param details { 
+   subject: string, 
+   html: string, 
+   text: string, 
+   notifications: { 
+     from: string, 
+     to: string, 
+     subject: string 
+   }}
+**/
 async function sendMail(details) {
   let transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -26,16 +34,15 @@ async function sendMail(details) {
       pass: process.env.EMAIL_PASSWORD,
     },
   });
-
   let info;
+
   try {
-    // send mail with defined transport object
     info = await transporter.sendMail({
-      from: details.notifications.from, // sender address
-      to: details.notifications.to, // list of receivers
-      subject: details.subject || details.notifications.subject, // Subject line
-      text: details.text, // plain text body
-      html: details.html, // html body
+      from: details.notifications.from,
+      to: details.notifications.to,
+      subject: details.subject || details.notifications.subject,
+      text: details.text,
+      html: details.html,
     });
   } catch (e) {
     logger.error(`Node Mailer failed to send email with error: ${e}`);
@@ -45,6 +52,31 @@ async function sendMail(details) {
   logger.info(`Message sent: ${info.messageId}`);
 }
 
+/**
+ * Helper to format an email on a query found for a site.
+ * @param title: string - title of the site
+ * @param url: string - site address
+ * @param query: string - query used to find the element
+ * @param notificationDetails: {
+    from: string - email from field
+    to: string - who to email message to
+    subject: string - subject field of email 
+  }
+**/
+function sendMailFromSiteQuery(title, url, query, notificationDetails) {
+  sendMail({
+    text: `
+      ${title}
+  
+      ${url}
+  
+  
+      ${query} found!
+    `,
+    notifications: notificationDetails,
+  });
+}
+
 module.exports = {
-  sendMail,
+  sendMailFromSiteQuery,
 };

@@ -4,7 +4,7 @@ Parse web pages and send alerts when criteria is met.
 
 ## Usage
 
-## Install
+### Install
 
 Install dependencies with `npm install`.
 
@@ -38,6 +38,7 @@ The general workflow for adding new sites and alerts looks like this:
    | inclusiveQuery     | Should alert when finding the query                                                                                                                 | `bool`                  |
    | interval           | Time, in milliseconds, between checking the site for the query                                                                                      | `number`                |
    | intervalAfterFound | After alerting the first time, how long to wait before testing again. Used to throttle notifications.                                               | `number`                |
+   | loadDelay          | The amount of time to wait for the dom to load all scripts and resources before querying the page.                                                  | `number`                |
    | options            | [JS DOM Options](https://github.com/jsdom/jsdom#basic-options). Can be used to enable JavaScript and resource loading if a site requires so to run. | `object`                |
    | notifications      | Configuration for email notifications                                                                                                               | `{ from, to, subject }` |
 
@@ -48,3 +49,7 @@ The general workflow for adding new sites and alerts looks like this:
 ### Start
 
 Now with all the configuration done, you are ready to start your server: `npm run start`
+
+## Troubleshooting
+
+- Logs can be found in `/logs` if you are having trouble with running the application
