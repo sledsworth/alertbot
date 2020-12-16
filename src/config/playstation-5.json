@@ -1,0 +1,13 @@
+{
+  "sites": [
+    {
+      "url": "https://www.amazon.com/PlayStation-5-Digital/dp/B08FC6MR62",
+      "query": "#add-to-cart-button"
+    },
+    {
+      "url": "https://www.bestbuy.com/site/sony-playstation-5-digital-edition-console/6430161.p?skuId=6430161",
+      "query": ".fulfillment-add-to-cart-button .add-to-cart-button[disabled]",
+      "inclusiveQuery": false
+    }
+  ]
+}

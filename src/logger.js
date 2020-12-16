@@ -19,11 +19,17 @@ const logConfiguration = {
       ),
     }),
     new winston.transports.File({
+      level: "debug",
+      filename: "./logs/debug.log",
+      format: winston.format.printf(({ message }) => message),
+    }),
+    new winston.transports.File({
       level: "error",
       filename: "./logs/errors.log",
     }),
     new winston.transports.File({
       filename: "./logs/exceptions.log",
+      level: "error",
       handleExceptions: true,
     }),
   ],

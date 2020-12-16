@@ -1,0 +1,13 @@
+{
+  "defaults": {
+    "query": "div.stock.available span.in-stock"
+  },
+  "sites": [
+    {
+      "url": "https://www.repfitness.com/bars-plates/storage/bar-and-bumper-plate-tree"
+    },
+    {
+      "url": "https://www.repfitness.com/strength-equipment/strength-training/benches/rep-ab-5000"
+    }
+  ]
+}
