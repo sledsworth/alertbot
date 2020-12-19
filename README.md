@@ -53,3 +53,4 @@ Now with all the configuration done, you are ready to start your server: `npm ru
 ## Troubleshooting
 
 - Logs can be found in `/logs` if you are having trouble with running the application
+- The `config` changes are not picked up automatically by the application, you have to restart to see the changes.
