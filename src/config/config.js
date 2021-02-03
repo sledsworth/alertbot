@@ -1,8 +1,8 @@
 const configs = [
-  require("./playstation-5"),
-  require("./xbox-series-x"),
+  // require("./playstation-5"),
+  // require("./xbox-series-x"),
   require("./rep-fitness"),
-  require("./rogue-fitness"),
+  // require("./rogue-fitness"),
   // Add your configs here...
 ];
 
