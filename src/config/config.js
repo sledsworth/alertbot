@@ -1,12 +1,12 @@
 const configs = [
-  // require("./playstation-5"),
+  require('./playstation-5'),
   // require("./xbox-series-x"),
-  require("./rep-fitness"),
+  // require("./rep-fitness"),
   // require("./rogue-fitness"),
   // Add your configs here...
-];
+]
 
-const globalDefaults = require("./defaults.json");
+const globalDefaults = require('./defaults.json')
 
 /**
 * Merges site data with local and global defaults.
@@ -29,9 +29,9 @@ const globalDefaults = require("./defaults.json");
 **/
 function getSiteWithDefaults(site, defaults) {
   if (defaults) {
-    return Object.assign({}, globalDefaults, defaults, site);
+    return Object.assign({}, globalDefaults, defaults, site)
   }
-  return Object.assign({}, globalDefaults, site);
+  return Object.assign({}, globalDefaults, site)
 }
 
 /**
@@ -45,14 +45,14 @@ function getSites() {
       return [
         ...acc,
         ...config.sites.map((site) => {
-          return getSiteWithDefaults(site, config.defaults);
+          return getSiteWithDefaults(site, config.defaults)
         }),
-      ];
+      ]
     }
-    return acc;
-  }, []);
+    return acc
+  }, [])
 }
 
 module.exports = {
   getSites,
-};
+}
