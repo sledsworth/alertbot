@@ -39,7 +39,6 @@ async function fetchSiteAndNotifyIfFound(site) {
 
   try {
     const item = await page.waitForSelector(site.query, site.options)
-    logger.info(item)
     if (item && site.inclusiveQuery) {
       logger.info(
         `✅ Found selector query (${site.query}) on site (${site.url})!`
