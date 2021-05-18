@@ -1,5 +1,5 @@
-const nodemailer = require("nodemailer");
-const logger = require("./logger.js");
+const nodemailer = require('nodemailer')
+const logger = require('./logger.js')
 
 if (
   !process.env.EMAIL_HOST ||
@@ -7,8 +7,8 @@ if (
   !process.env.EMAIL_ADDRESS
 ) {
   throw new Error(
-    "Missing email credentials for notifying a find. Setup a .env file at the root with fields EMAIL_ADDRESS, EMAIL_PASSWORD, and EMAIL_HOST."
-  );
+    '❌ Missing email credentials for notifying a find. Setup a .env file at the root with fields EMAIL_ADDRESS, EMAIL_PASSWORD, and EMAIL_HOST.'
+  )
 }
 
 /**
@@ -33,8 +33,8 @@ async function sendMail(details) {
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.EMAIL_PASSWORD,
     },
-  });
-  let info;
+  })
+  let info
 
   try {
     info = await transporter.sendMail({
@@ -43,13 +43,13 @@ async function sendMail(details) {
       subject: details.subject || details.notifications.subject,
       text: details.text,
       html: details.html,
-    });
+    })
   } catch (e) {
-    logger.error(`Node Mailer failed to send email with error: ${e}`);
-    return;
+    logger.error(`❌ Node Mailer failed to send email with error: ${e}`)
+    return
   }
 
-  logger.info(`Message sent: ${info.messageId}`);
+  logger.info(`📬 Message sent: ${info.messageId}`)
 }
 
 /**
@@ -63,20 +63,17 @@ async function sendMail(details) {
     subject: string - subject field of email 
   }
 **/
-function sendMailFromSiteQuery(title, url, query, notificationDetails) {
+function sendMailFromSiteQuery(title, url, notificationDetails) {
   sendMail({
     text: `
-      ${title}
+      📬 ${title}
   
-      ${url}
-  
-  
-      ${query} found!
+      🔗 ${url}
     `,
     notifications: notificationDetails,
-  });
+  })
 }
 
 module.exports = {
   sendMailFromSiteQuery,
-};
+}

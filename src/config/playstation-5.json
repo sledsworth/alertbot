@@ -12,20 +12,7 @@
     {
       "url": "https://www.target.com/p/playstation-5-console/-/A-81114595#lnk=sametab",
       "query": "[data-test=\"shipItButton\"]",
-      "inclusiveQuery": true,
-      "options": {
-        "runScripts": "dangerously",
-        "resources": "usable"
-      }
-    },
-    {
-      "url": "https://www.target.com/p/nintendo-switch-pro-controller/-/A-52180631#lnk=sametab",
-      "query": "[data-test=\"shipItButton\"]",
-      "inclusiveQuery": true,
-      "options": {
-        "runScripts": "dangerously",
-        "resources": "usable"
-      }
+      "inclusiveQuery": true
     },
     {
       "url": "https://www.walmart.com/ip/PlayStation-5-Console/363472942?irgwc=1&sourceid=imp_yRN38OTFLxyLW6WwUx0Mo3Z2UkB2oSRFL0lAQM0&veh=aff&wmlspartner=imp_1943169&clickid=yRN38OTFLxyLW6WwUx0Mo3Z2UkB2oSRFL0lAQM0&sharedid=&affiliates_ad_id=565706&campaign_id=9383",

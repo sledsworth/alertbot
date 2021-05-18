@@ -1,7 +1,14 @@
-require("dotenv").config();
-const finder = require("./finder.js");
-const config = require("./config/config.js");
+require('dotenv').config()
+const finder = require('./finder.js')
+const config = require('./config/config.js')
+const logger = require('./logger')
 
-config.getSites().forEach((site) => {
-  finder.initializeIntervalToWatchSite(site);
-});
+async function main() {
+  logger.info('🤖 Started Alertbot!')
+  await finder.init()
+  config.getSites().forEach((site) => {
+    finder.initializeIntervalToWatchSite(site)
+  })
+}
+
+main()

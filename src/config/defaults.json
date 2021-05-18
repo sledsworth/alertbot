@@ -1,13 +1,15 @@
 {
   "notifications": {
-    "from": "\"Alertbot 🤖\" <parser@empatheticbot.com>",
+    "from": "\"🤖 Alertbot\" <alert@empatheticbot.com>",
     "to": "sledsworth@gmail.com",
-    "subject": "Alertbot Found a Thing!"
+    "subject": "✅ Alertbot Found a Thing!"
   },
   "query": "button[title=\"Add to Cart\"]",
   "inclusiveQuery": true,
-  "interval": 15000,
-  "intervalAfterFound": 30000,
-  "loadDelay": 10000,
-  "options": {}
+  "interval": 20000,
+  "options": {
+    "visible": true,
+    "hidden": false,
+    "timeout": 15000
+  }
 }

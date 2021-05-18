@@ -1,90 +1,13 @@
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-const logger = require("./logger.js");
-const mailer = require("./mailer.js");
-const { delay, updateIntervalFor } = require("./utilities");
+const puppeteer = require('puppeteer')
+const logger = require('./logger.js')
+const mailer = require('./mailer.js')
+const { updateIntervalFor } = require('./utilities')
 
-/**
- * Get the DOM of the site at requested url.
- *
- * @param url: string - the URL of the site we want the DOM of
- * @param options: {JSDOM Options: https://github.com/jsdom/jsdom#basic-options} - helpful to set allowance of external scripts *   and resources.
- * @param delayFor: number - amount of time to wait before returning the DOM. This is fairly arbitrary, but in cases where we
- *   request external scripts be loaded, we want to allow enough time for the site to completely render before querying.
- *
- * @return JSDOM - DOM of the site at URL
- **/
-async function getDomFromURLWithOptions(url, options, delayFor = 10000) {
-  let dom;
-  try {
-    dom = await JSDOM.fromURL(url, options);
-  } catch (e) {
-    logger.error(`JSDOM.fromURL failed with error: ${e}`);
-    return;
-  }
-  // Wait some time before attempting to query the page in case there
-  // are additional scripts needed to run before site is completely rendered.
-  // This is an arbitrary length of 10 seconds and doesn't guarantee the site is done loading.
-  await delay(delayFor);
+let browser
 
-  return dom;
-}
-
-/**
- * Get the element from the dom given a query.
- *
- * @param dom: JSDOM - DOM of the site at URL (https://github.com/jsdom/jsdom)
- * @param query: string - query to be used in `querySelector` to find the element
- *
- * @return element: HTMLElement - the element found by the query
- **/
-function getQueryElementFromURL(dom, query) {
-  if (!dom.window) {
-    logger.error(`DOM not found for ${url}`);
-    return;
-  }
-  const element = dom.window.document.body.querySelector(query);
-  if (element) {
-    logger.silly(
-      `Queried (${query}) on page ${dom.window.document.title} and found:  ${element}`
-    );
-  } else {
-    logger.silly(
-      `Queried (${query}) on page ${dom.window.document.title} and didn't find the element.`
-    );
-  }
-  return element;
-}
-
-/**
- * Fetch the dom, query for the element, and determine if we should send an alert. Send alert if criteria has been met.
- *
- * @param site: {site} - the site details used to fetch the dom and query to determine if we need to alert.
- **/
-async function checkSiteForQueryAndAlertOnFind(site) {
-  const dom = await getDomFromURLWithOptions(
-    site.url,
-    site.options,
-    site.loadDelay
-  );
-  const element = getQueryElementFromURL(dom, site.query);
-  const hasMetCriteriaForAlert = site.inclusiveQuery ? !!element : !element;
-
-  if (hasMetCriteriaForAlert) {
-    logger.info(`Found ${site.url}!`);
-    mailer.sendMailFromSiteQuery(
-      dom.window.document.title,
-      site.url,
-      site.query,
-      site.notifications
-    );
-
-    // If we have intervalAfterFound set we need to
-    // update the interval at which we poll the site
-    if (site.intervalAfterFound) {
-      initializeIntervalToWatchSite(site, site.intervalAfterFound);
-    }
-  }
+async function init() {
+  browser = await puppeteer.launch()
+  logger.info('🕵️‍♀️ Finder initialized, searching for items...')
 }
 
 /**
@@ -95,10 +18,48 @@ async function checkSiteForQueryAndAlertOnFind(site) {
  **/
 function initializeIntervalToWatchSite(site, interval = site.interval) {
   updateIntervalFor(site.url, interval, () => {
-    checkSiteForQueryAndAlertOnFind(site, interval);
-  });
+    fetchSiteAndNotifyIfFound(site, interval)
+  })
+}
+
+async function sendAlert(page, notifications) {
+  const title = await page.title()
+  logger.info(`✅ Found ${title} on ${page.url()}!`)
+  mailer.sendMailFromSiteQuery(title, page.url(), notifications)
+}
+
+async function fetchSiteAndNotifyIfFound(site) {
+  const page = await browser.newPage()
+  await page.goto(site.url)
+
+  try {
+    const item = await page.waitForSelector(site.query, site.options)
+    if (item && site.inclusiveQuery) {
+      logger.info(
+        `✅ Found selector query (${site.query}) on site (${site.url})!`
+      )
+      await sendAlert(page, site.notifications)
+    } else if (item) {
+      logger.info(
+        `❌ Found selector query (${site.query}) on site (${site.url}), we want this to be excluded.`
+      )
+    }
+  } catch (error) {
+    if (!site.inclusiveQuery) {
+      logger.info(
+        `✅ Did not find selector query (${site.query}) on site (${site.url})!`
+      )
+      await sendAlert(page, site.notifications)
+    } else {
+      logger.info(
+        `❌ Did not find selector query (${site.query}) on site (${site.url}), we want this to be included.`
+      )
+    }
+  }
+  await page.close()
 }
 
 module.exports = {
+  init,
   initializeIntervalToWatchSite,
-};
+}

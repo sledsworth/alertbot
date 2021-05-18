@@ -14,7 +14,7 @@ The main configuration you will have to set is inside `/src/config`. Generally, 
 
 The general workflow for adding new sites and alerts looks like this:
 
-1. Create a new `json` config file. Check one of the existing ones for format, but generally it looks something like this:
+1. Create a new `json` config file. Check one of the existing ones for format, but it looks something like this:
    ```json
    {
      "defaults": {
@@ -32,15 +32,13 @@ The general workflow for adding new sites and alerts looks like this:
    ```
 2. Set your global defaults in `/src/config/defaults.json`. Here is a list of properties you can set:
 
-   | Property           | Description                                                                                                                                         | Type                    |
-   | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-   | query              | DOM query (uses 'querySelector') that is used to determine if an alert should be sent.                                                              | `string`                |
-   | inclusiveQuery     | Should alert when finding the query                                                                                                                 | `bool`                  |
-   | interval           | Time, in milliseconds, between checking the site for the query                                                                                      | `number`                |
-   | intervalAfterFound | After alerting the first time, how long to wait before testing again. Used to throttle notifications.                                               | `number`                |
-   | loadDelay          | The amount of time to wait for the dom to load all scripts and resources before querying the page.                                                  | `number`                |
-   | options            | [JS DOM Options](https://github.com/jsdom/jsdom#basic-options). Can be used to enable JavaScript and resource loading if a site requires so to run. | `object`                |
-   | notifications      | Configuration for email notifications                                                                                                               | `{ from, to, subject }` |
+   | Property       | Description                                                                                                                                                                                                                                                                                                           | Type                    |
+   | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+   | query          | DOM query that is used to determine if an alert should be sent.                                                                                                                                                                                                                                                       | `string`                |
+   | inclusiveQuery | Should alert when finding the query? Or in the absence of the element? This is useful to set to `false` in cases where you don't know what the 'Add to Cart' button would look like, but you do have an element to query for that wouldn't exist if the item was in stock ('Out of stock' or disabled button, etc.) . | `bool`                  |
+   | interval       | Time, in milliseconds, between checking the site for the query                                                                                                                                                                                                                                                        | `number`                |
+   | options        | [Puppeteer Page.waitForSelector Options](https://pptr.dev/#?product=Puppeteer&version=v9.1.0&show=api-pagewaitforselectorselector-options). Can be used to set timeouts for searches and other criteria for selectors.                                                                                                |
+   | notifications  | Configuration for email notifications                                                                                                                                                                                                                                                                                 | `{ from, to, subject }` |
 
 3. Add the path to the config file you created in `/src/config/config.js`.
 
