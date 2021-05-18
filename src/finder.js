@@ -29,13 +29,12 @@ async function sendAlert(page, notifications) {
 }
 
 async function fetchSiteAndNotifyIfFound(site) {
-  logger.silly(`Fetching site: ${site.url}`)
+  logger.silly(`⚠️ Fetching site: ${site.url}`)
   const page = await browser.newPage()
   try {
-    const response = await page.goto(site.url)
-    logger.warn(response)
+    await page.goto(site.url)
   } catch (e) {
-    logger.warn(`⚠️ Failed to go to webpage ${site.url}. ${e}`)
+    logger.error(` Failed to go to webpage ${site.url}. ${e}`)
   }
 
   try {
@@ -52,6 +51,7 @@ async function fetchSiteAndNotifyIfFound(site) {
       )
     }
   } catch (error) {
+    logger.warn(error.message)
     if (!site.inclusiveQuery) {
       logger.info(
         `✅ Did not find selector query (${site.query}) on site (${site.url})!`
