@@ -29,17 +29,24 @@ async function sendAlert(page, notifications) {
 }
 
 async function fetchSiteAndNotifyIfFound(site) {
+  logger.silly(`Fetching site: ${site.url}`)
   const page = await browser.newPage()
-  await page.goto(site.url)
+  try {
+    const response = await page.goto(site.url)
+    logger.warn(response)
+  } catch (e) {
+    logger.warn(`⚠️ Failed to go to webpage ${site.url}. ${e}`)
+  }
 
   try {
     const item = await page.waitForSelector(site.query, site.options)
+    logger.info(item)
     if (item && site.inclusiveQuery) {
       logger.info(
         `✅ Found selector query (${site.query}) on site (${site.url})!`
       )
       await sendAlert(page, site.notifications)
-    } else if (item) {
+    } else {
       logger.info(
         `❌ Found selector query (${site.query}) on site (${site.url}), we want this to be excluded.`
       )
