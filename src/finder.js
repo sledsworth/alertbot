@@ -34,7 +34,8 @@ async function fetchSiteAndNotifyIfFound(site) {
   try {
     await page.goto(site.url)
   } catch (e) {
-    logger.error(` Failed to go to webpage ${site.url}. ${e}`)
+    logger.error(`🚫 Failed to go to webpage ${site.url}. ${e}`)
+    return
   }
 
   try {
