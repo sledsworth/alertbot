@@ -1,6 +1,6 @@
 # Alertbot
 
-Parse web pages and send alerts when criteria is met.
+Parse web pages and send alert emails when criteria is met.
 
 ## Usage
 
